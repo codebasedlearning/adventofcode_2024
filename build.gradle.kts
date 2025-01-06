@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.codebasedlearning:adventofcode_commons:6f69a129") {
+    implementation("com.github.codebasedlearning:adventofcode_commons:1bf948c7aa") {
         isChanging = true
     }
     testImplementation(kotlin("test"))
@@ -38,7 +38,7 @@ subprojects {
     dependencies {
         //  ls -rm ~/.gradle/caches/modules-2/files-2.1/com.github.codebasedlearning/adventofcode_commons/main-SNAPSHOT/
         //implementation("com.github.rowlf:cbl_aoc_common:main-SNAPSHOT") // +
-        implementation("com.github.codebasedlearning:adventofcode_commons:6f69a129") {
+        implementation("com.github.codebasedlearning:adventofcode_commons:1bf948c7aa") {
             isChanging = true
         }
 //
