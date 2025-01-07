@@ -199,5 +199,4 @@ fun main() {
     checkResult(1432898) { // [M3 18.621625ms]
         sumGpsPositions1(isExtended = true)
     }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (larger boxes)") }
-
 }
