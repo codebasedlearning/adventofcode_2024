@@ -2,15 +2,15 @@
 
 package dev.codebasedlearning.adventofcode.day04
 
-import dev.codebasedlearning.adventofcode.commons.RCDir
-import dev.codebasedlearning.adventofcode.commons.checkResult
-import dev.codebasedlearning.adventofcode.commons.contentEquals
-import dev.codebasedlearning.adventofcode.commons.linesOf
-import dev.codebasedlearning.adventofcode.commons.print
-import dev.codebasedlearning.adventofcode.commons.slice
-import dev.codebasedlearning.adventofcode.commons.toGrid
-import dev.codebasedlearning.adventofcode.commons.visit
-import dev.codebasedlearning.adventofcode.commons.walk
+import dev.codebasedlearning.adventofcode.commons.geometry.Direction
+import dev.codebasedlearning.adventofcode.commons.geometry.visit
+import dev.codebasedlearning.adventofcode.commons.geometry.walk
+import dev.codebasedlearning.adventofcode.commons.grid.slice
+import dev.codebasedlearning.adventofcode.commons.grid.toGrid
+import dev.codebasedlearning.adventofcode.commons.input.linesOf
+import dev.codebasedlearning.adventofcode.commons.iterables.contentEquals
+import dev.codebasedlearning.adventofcode.commons.timing.checkResult
+import dev.codebasedlearning.adventofcode.commons.visualization.print
 
 val examples = listOf(
 """
@@ -48,7 +48,7 @@ fun main() {
 
     checkResult(2406) { // [M3 28.228709ms]
         grid.positions.sumOf { pos ->
-            RCDir.AllCardinals.count { dir -> pos.walk(dir).toGrid(grid).take(xmasSize).contentEquals(xmas) }
+            Direction.AllCardinals.count { dir -> pos.walk(dir).toGrid(grid).take(xmasSize).contentEquals(xmas) }
         }
     }.let { (dt,result,check) -> println("[part 1] result: $result $check, dt: $dt (word search)") }
 
@@ -63,13 +63,12 @@ fun main() {
             // from pos consider only diagonal lines matching MAS in all variations
             if (grid[pos] != midElement) 0
             else {
-                val uldr = (pos.visit(RCDir.UpLeft).slice(1..extent).toGrid(grid) +
-                        pos.visit(RCDir.DownRight).slice(1..extent).toGrid(grid)).toList()
-                val dlur = (pos.visit(RCDir.DownLeft).slice(1..extent).toGrid(grid) +
-                        pos.visit(RCDir.UpRight).slice(1..extent).toGrid(grid)).toList()
+                val uldr = (pos.visit(Direction.UpLeft).slice(1..extent).toGrid(grid) +
+                        pos.visit(Direction.DownRight).slice(1..extent).toGrid(grid)).toList()
+                val dlur = (pos.visit(Direction.DownLeft).slice(1..extent).toGrid(grid) +
+                        pos.visit(Direction.UpRight).slice(1..extent).toGrid(grid)).toList()
                 if ( (uldr==mas || uldr==sam) && (dlur==mas || dlur==sam) ) 1 else 0.toInt()
             }
         }
     }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (xmas search)") }
-
 }

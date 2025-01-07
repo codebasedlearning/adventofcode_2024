@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "dev.codebasedlearning.adventofcode.y2024"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     mavenCentral()
@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.codebasedlearning:adventofcode_commons:d2fd6fcf5d") {
+    implementation("com.github.codebasedlearning:adventofcode_commons:c4d2258ac1") {
         isChanging = true
     }
     testImplementation(kotlin("test"))
@@ -38,7 +38,7 @@ subprojects {
     dependencies {
         //  ls -rm ~/.gradle/caches/modules-2/files-2.1/com.github.codebasedlearning/adventofcode_commons/main-SNAPSHOT/
         //implementation("com.github.rowlf:cbl_aoc_common:main-SNAPSHOT") // +
-        implementation("com.github.codebasedlearning:adventofcode_commons:d2fd6fcf5d") {
+        implementation("com.github.codebasedlearning:adventofcode_commons:c4d2258ac1") {
             isChanging = true
         }
 //

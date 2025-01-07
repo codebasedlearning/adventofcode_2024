@@ -2,10 +2,10 @@
 
 package dev.codebasedlearning.adventofcode.day03
 
-import dev.codebasedlearning.adventofcode.commons.checkResult
-import dev.codebasedlearning.adventofcode.commons.linesOf
-import dev.codebasedlearning.adventofcode.commons.parseNumbers
-import dev.codebasedlearning.adventofcode.commons.print
+import dev.codebasedlearning.adventofcode.commons.input.linesOf
+import dev.codebasedlearning.adventofcode.commons.input.parseNumbers
+import dev.codebasedlearning.adventofcode.commons.timing.checkResult
+import dev.codebasedlearning.adventofcode.commons.visualization.print
 
 val examples = listOf(
 """
