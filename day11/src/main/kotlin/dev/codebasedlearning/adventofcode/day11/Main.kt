@@ -1,28 +1,16 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/11
 
 package dev.codebasedlearning.adventofcode.day11
 
 import dev.codebasedlearning.adventofcode.commons.input.linesOf
 import dev.codebasedlearning.adventofcode.commons.input.parseNumbers
+import dev.codebasedlearning.adventofcode.commons.iterables.CounterMap
 import dev.codebasedlearning.adventofcode.commons.timing.checkResult
 import dev.codebasedlearning.adventofcode.commons.visualization.print
 import kotlin.math.pow
 import kotlin.math.log10
-
-class CounterMap<T>(
-    private val delegate: MutableMap<T, Long> = mutableMapOf()
-) : MutableMap<T,Long> by delegate {
-    constructor(vararg iter:T):this() { addAll(iter.asIterable()) }
-    constructor(iter: Iterable<T>):this() { addAll(iter) }
-    constructor(map: CounterMap<T>):this() { addAll(map) }
-
-    override operator fun get(key:T):Long =delegate.getOrDefault(key,0L)
-
-    fun addAll(list: Iterable<T>) = apply { list.forEach { this[it] += 1 } }
-    fun addAll(map: CounterMap<T>) = apply { map.forEach { this[it.key] += it.value  } }
-
-    override fun toString():String = delegate.toString()
-}
 
 val examples = listOf(
 // 1: ...
@@ -72,14 +60,6 @@ fun main() {
                     } else {
                         nextStones[id * 2024L] += count
                     }
-                    /* val str = id.toString()
-                    val len = str.length
-                    if (len % 2 == 0) {
-                        nextStones[str.substring(0, len / 2).toLong()] += count  // or take()
-                        nextStones[str.substring(len / 2).toLong()] += count     // or drop()
-                    } else {
-                        nextStones[id * 2024L] += count
-                    } */
                 }
             }
             current = 1 - current

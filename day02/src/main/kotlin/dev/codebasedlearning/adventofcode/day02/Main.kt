@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/2
 
 package dev.codebasedlearning.adventofcode.day02
 
@@ -10,13 +12,13 @@ import kotlin.math.abs
 
 val examples = listOf(
 """
-    7 6 4 2 1
-    1 2 7 8 9
-    9 7 6 2 1
-    1 3 2 4 5
-    8 6 4 4 1
-    1 3 6 7 9
-    """
+7 6 4 2 1
+1 2 7 8 9
+9 7 6 2 1
+1 3 2 4 5
+8 6 4 4 1
+1 3 6 7 9
+"""
 )
 
 fun main() {
@@ -33,7 +35,6 @@ fun main() {
     }
 
     val reports = story.lines.map { line -> line.parseNumbers<Int>(' ') }
-    reports.print(indent = 2, description = "reports:", take = 6)
 
     /**
      * Checks if a list of integers is either strictly increasing or strictly decreasing

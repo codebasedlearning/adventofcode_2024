@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/16
 
 package dev.codebasedlearning.adventofcode.day16
 
@@ -20,7 +22,7 @@ fun nodeOf(pos: Position, dir: Direction, path: Path, score: Int)
 
 val examples = listOf(
 // 1: 7036 / 45
-    """
+"""
 ###############
 #.......#....E#
 #.#.###.#.###.#
@@ -38,7 +40,7 @@ val examples = listOf(
 ###############
 """,
 // 2: 11048 / 64
-    """
+"""
 #################
 #...#...#...#..E#
 #.#.#.#.#.#.#.#.#
@@ -58,7 +60,7 @@ val examples = listOf(
 #################            
 """,
 // 3: 2007 / 8 (debug example)
-    """
+"""
 ########
 #.....E#
 #.#.##.#
@@ -82,11 +84,11 @@ fun main() {
 
     val maze = story.lines.toGrid()
 
-    maze.print(description = "original:", separator = "")
+    // maze.print(description = "original:", separator = "")
     var startPos = maze.positions.find { maze[it] == 'S' }!!.also { maze[it] = '.' }
     var endPos = maze.positions.find { maze[it] == 'E' }!!.also { maze[it] = '.' }
 
-    println("\nstartPos: $startPos, endPos: $endPos\n")
+    // println("\nstartPos: $startPos, endPos: $endPos\n")
 
     fun findAllRoutes(): List<ScoredPath> = mutableListOf<ScoredPath>().apply {
         val visited = mutableMapOf<Step, Int>()

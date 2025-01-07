@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/1
 
 package dev.codebasedlearning.adventofcode.day01
 
@@ -33,6 +35,7 @@ fun main() {
     }
 
     val lineRegex = """(\d+)\s+(\d+)""".toRegex()
+
     // keep both lists at one place, no need for an extra class
     val sortedData = Pair(mutableListOf<Int>(), mutableListOf<Int>()).apply {
         for (line in story.lines) {

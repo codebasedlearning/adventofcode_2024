@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/5
 
 package dev.codebasedlearning.adventofcode.day05
 
@@ -75,7 +77,7 @@ fun main() {
             if (update.isCorrect()) { update[update.size/2] }
             else { wrongUpdates.add(update); 0 }
         }
-    }.let { (dt,result,check) -> println("[part 1] result: $result $check, dt: $dt (...)") }
+    }.let { (dt,result,check) -> println("[part 1] result: $result $check, dt: $dt (page ordering rules)") }
 
     // part 2: solutions: 123 / 5093
 
@@ -89,5 +91,5 @@ fun main() {
                 }
             }.run { this[this.size/2] } // btw. we could have stopped at the mid-element
         }
-    }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (...)") }
+    }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (incorrectly-ordered updates)") }
 }

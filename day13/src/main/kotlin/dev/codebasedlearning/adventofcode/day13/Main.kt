@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/13
 
 package dev.codebasedlearning.adventofcode.day13
 
@@ -25,7 +27,7 @@ Prize: X=7870, Y=6450
 Button A: X+69, Y+23
 Button B: X+27, Y+71
 Prize: X=18641, Y=10279
-""",
+"""
 )
 
 fun main() {

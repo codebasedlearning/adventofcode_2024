@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/15
 
 package dev.codebasedlearning.adventofcode.day15
 
@@ -13,7 +15,6 @@ import dev.codebasedlearning.adventofcode.commons.input.toBlocks
 import dev.codebasedlearning.adventofcode.commons.timing.checkResult
 import dev.codebasedlearning.adventofcode.commons.visualization.print
 import dev.codebasedlearning.adventofcode.commons.geometry.plus
-
 
 val examples = listOf(
 // 1: ..
@@ -51,7 +52,7 @@ vvv<<^>^v^^><<>>><>^<<><^vv^^<>vvv<>><^^v>^>vv<>v<<<<v<^v>^<^^>>>^<v<v
 <><^^>^^^<><vvvvv^v<v<<>^v<v>v<<^><<><<><<<^^<<<^<<>><<><^^^>^^<>^>v<>
 ^^>vv<^v^v<vv>^<><v<^v>^^^>>>^^vvv^>vvv<>>>^<^>>>>>^<<^v>^vvv<>^<><<v>
 v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^
-""".trimIndent(),
+""",
 """
 #######
 #...#.#
@@ -62,7 +63,7 @@ v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^
 #######
 
 <vv<<^^<<^^
-""".trimIndent()
+"""
 )
 
 fun main() {
@@ -79,10 +80,10 @@ fun main() {
     }
 
     val (warehouseLoaded, moves) = story.lines.toBlocks().let { it[0].toGrid() to it[1].joinToString(separator = "") }
-    warehouseLoaded.print(indent = 2, description = "loaded warehouse:", separator = "")
-    println("moves: $moves\n")
+    // warehouseLoaded.print(indent = 2, description = "loaded warehouse:", separator = "")
+    // println("moves: $moves\n")
 
-    fun sumGpsPositions1(isExtended: Boolean): Long {
+    fun sumGpsPositions(isExtended: Boolean): Long {
         val warehouseStart = if (!isExtended) warehouseLoaded.copy() else Grid<Char>().apply {
             val repl = mapOf('#' to "##", '.' to "..", 'O' to "[]", '@' to "@.")
             this.addAll((0..<warehouseLoaded.rows).map { row ->
@@ -191,12 +192,12 @@ fun main() {
     // part 1: solutions: 2028 / 1415498
 
     checkResult(1415498) { // [M3 20.646875ms]
-        sumGpsPositions1(isExtended = false)
+        sumGpsPositions(isExtended = false)
     }.let { (dt,result,check) -> println("[part 1] result: $result $check, dt: $dt (boxes)") }
 
     // part 2: solutions: 1751 / 1432898
 
     checkResult(1432898) { // [M3 18.621625ms]
-        sumGpsPositions1(isExtended = true)
+        sumGpsPositions(isExtended = true)
     }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (larger boxes)") }
 }

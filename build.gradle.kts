@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "dev.codebasedlearning.adventofcode.y2024"
-version = "1.0.2"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.codebasedlearning:adventofcode_commons:c4d2258ac1") {
+    implementation("com.github.codebasedlearning:adventofcode_commons:3bd6e22bdc") {
         isChanging = true
     }
     testImplementation(kotlin("test"))
@@ -26,22 +26,18 @@ tasks.test {
 }
 
 subprojects {
-    //apply(plugin = "jvm")
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
     repositories {
-        mavenCentral() // Inherits repositories for dependency resolution
+        mavenCentral()
         maven { url = uri("https://jitpack.io") }
 
     }
 
     dependencies {
-        //  ls -rm ~/.gradle/caches/modules-2/files-2.1/com.github.codebasedlearning/adventofcode_commons/main-SNAPSHOT/
-        //implementation("com.github.rowlf:cbl_aoc_common:main-SNAPSHOT") // +
-        implementation("com.github.codebasedlearning:adventofcode_commons:c4d2258ac1") {
+        implementation("com.github.codebasedlearning:adventofcode_commons:3bd6e22bdc") {
             isChanging = true
         }
-//
         testImplementation(kotlin("test"))
     }
 

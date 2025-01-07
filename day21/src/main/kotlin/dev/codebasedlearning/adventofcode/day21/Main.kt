@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/21
 
 package dev.codebasedlearning.adventofcode.day21
 
@@ -10,6 +12,7 @@ import dev.codebasedlearning.adventofcode.commons.input.linesOf
 import dev.codebasedlearning.adventofcode.commons.timing.checkResult
 import dev.codebasedlearning.adventofcode.commons.visualization.print
 import dev.codebasedlearning.adventofcode.commons.geometry.minus
+import dev.codebasedlearning.adventofcode.commons.grid.mapKeysToDir
 
 val examples = listOf(
 // 1: ..
@@ -37,13 +40,6 @@ fun main() {
 
     val codes = story.lines.map { it to it.substringBeforeLast('A').toLong() }
 
-    val moveMap = mapOf(
-        Direction.Up.asPos to '^',
-        Direction.Down.asPos to 'v',
-        Direction.Left.asPos to '<',
-        Direction.Right.asPos to '>',
-    )
-
     val numPad = object {
         val layout = """
             789
@@ -59,7 +55,7 @@ fun main() {
         val paths = chars.associateWith { c1 ->
             chars.associateWith { c2 ->
                 graph.findAllShortestPaths(pos[c1]!!, pos[c2]!!).map { list ->
-                    list.zipWithNext { a, b -> moveMap[(b - a)]!! }.joinToString("")
+                    list.zipWithNext { a, b -> mapKeysToDir[(b - a).asDir]!! }.joinToString("")
                 }
             }
         }
@@ -78,7 +74,7 @@ fun main() {
         val paths = chars.associateWith { c1 ->
             chars.associateWith { c2 ->
                 graph.findAllShortestPaths(pos[c1]!!, pos[c2]!!).map { list ->
-                    list.zipWithNext { a, b -> moveMap[(b - a)]!! }.joinToString("")
+                    list.zipWithNext { a, b -> mapKeysToDir[(b - a).asDir]!! }.joinToString("")
                 }
             }
         }
@@ -98,12 +94,12 @@ fun main() {
 
     checkResult(152942) { // [M3 529.209us]
         codes.sumOf { (code, num) -> calcLength(code, 2 + 1, numPad.paths) * num }
-    }.let { (dt,result,check) -> println("[part 1] result: $result $check, dt: $dt (...)") }
+    }.let { (dt,result,check) -> println("[part 1] result: $result $check, dt: $dt (starship panels)") }
 
     // part 2: solutions: . / 189235298434780
 
     checkResult(189235298434780) { // [M3 1.351166ms]
         codes.sumOf { (code, num) -> calcLength(code, 25 + 1, numPad.paths) * num }
-    }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (...)") }
+    }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (more starship panels)") }
 
 }

@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/10
 
 package dev.codebasedlearning.adventofcode.day10
 
@@ -12,7 +14,7 @@ import dev.codebasedlearning.adventofcode.commons.geometry.plus
 
 val examples = listOf(
 // 1: trailheads 2
-    """
+"""
 ...0...
 ...1...
 ...2...
@@ -22,7 +24,7 @@ val examples = listOf(
 9.....9
 """,
 // 2: trailheads 4
-    """
+"""
 ..90..9
 ...1.98
 ...2..7
@@ -32,7 +34,7 @@ val examples = listOf(
 987....
 """,
 // 3: trailheads 2
-    """
+"""
 10..9..
 2...8..
 3...7..
@@ -42,7 +44,7 @@ val examples = listOf(
 .....01
 """,
 // 4: trailheads 36, rating 81
-    """
+"""
 89010123
 78121874
 87430965
@@ -53,7 +55,7 @@ val examples = listOf(
 10456732
 """,
 // 5: rating 81
-    """
+"""
 .....0.
 ..4321.
 ..5..2.
@@ -63,7 +65,7 @@ val examples = listOf(
 ..9....
 """,
 // 6: rating 13
-    """
+"""
 ..90..9
 ...1.98
 ...2..7
@@ -73,7 +75,7 @@ val examples = listOf(
 987....
 """,
 // 7: rating 227
-    """
+"""
 012345
 123456
 234567
@@ -82,7 +84,7 @@ val examples = listOf(
 56789.
 """,
 // 8: rating 81
-    """
+"""
 89010123
 78121874
 87430965
@@ -91,7 +93,7 @@ val examples = listOf(
 32019012
 01329801
 10456732
-""",
+"""
 )
 
 fun main() {

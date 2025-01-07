@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/24
 
 package dev.codebasedlearning.adventofcode.day24
 
@@ -23,7 +25,7 @@ x01 XOR y01 -> z01
 x02 OR y02 -> z02
 """,
     // 2: ..
-    """
+"""
 x00: 1
 x01: 0
 x02: 1
@@ -227,5 +229,4 @@ fun main() {
             }
         violated.sorted().joinToString(",")
     }.let { (dt,result,check) -> println("[part 2] result: '$result' $check, dt: $dt (Carry Ripple Adder)") }
-
 }

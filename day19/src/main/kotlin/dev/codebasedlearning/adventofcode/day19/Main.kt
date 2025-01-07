@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/19
 
 package dev.codebasedlearning.adventofcode.day19
 
@@ -9,7 +11,7 @@ import dev.codebasedlearning.adventofcode.commons.visualization.print
 
 val examples = listOf(
 // 1: ..
-    """
+"""
 r, wr, b, g, bwu, rb, gb, br
 
 brwrr

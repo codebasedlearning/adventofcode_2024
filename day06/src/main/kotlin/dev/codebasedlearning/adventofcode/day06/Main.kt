@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/6
 
 package dev.codebasedlearning.adventofcode.day06
 
@@ -17,7 +19,7 @@ import dev.codebasedlearning.adventofcode.commons.geometry.times
 import dev.codebasedlearning.adventofcode.commons.geometry.plus
 
 val examples = listOf(
-    """        
+"""        
 ....#.....
 .........#
 ..........

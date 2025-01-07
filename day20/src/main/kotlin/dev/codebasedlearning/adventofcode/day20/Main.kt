@@ -1,8 +1,9 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/20
 
 package dev.codebasedlearning.adventofcode.day20
 
-import dev.codebasedlearning.adventofcode.commons.geometry.Direction
 import dev.codebasedlearning.adventofcode.commons.geometry.norm1
 import dev.codebasedlearning.adventofcode.commons.geometry.toDirectionSquare
 import dev.codebasedlearning.adventofcode.commons.geometry.walk
@@ -76,11 +77,11 @@ fun main() {
 
     checkResult(1346) { // [M3 40.250916ms]
         cheats(2,if (story.example==0) 100 else 0)
-    }.let { (dt,result,check) -> println("[part 1] result: $result $check, dt: $dt (...)") }
+    }.let { (dt,result,check) -> println("[part 1] result: $result $check, dt: $dt (small cheats)") }
 
     // part 2: solutions: 285 / 985482
 
     checkResult(985482) { // [M3 784.168ms]
         cheats(20,if (story.example==0) 100 else 50)
-    }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (...)") }
+    }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (many cheats)") }
 }

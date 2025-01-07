@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/17
 
 package dev.codebasedlearning.adventofcode.day17
 
@@ -10,7 +12,7 @@ import dev.codebasedlearning.adventofcode.commons.visualization.print
 
 val examples = listOf(
 // 1
-    """
+"""
 Register A: 729
 Register B: 0
 Register C: 0
@@ -18,7 +20,7 @@ Register C: 0
 Program: 0,1,5,4,3,0
 """,
 // 2
-    """
+"""
 Register A: 0
 Register B: 0
 Register C: 9
@@ -26,7 +28,7 @@ Register C: 9
 Program: 2,6
 """,
 // 3
-    """
+"""
 Register A: 10
 Register B: 0
 Register C: 0
@@ -34,7 +36,7 @@ Register C: 0
 Program: 5,0,5,1,5,4
 """,
 // 4
-    """ 
+""" 
 Register A: 2024
 Register B: 0
 Register C: 0
@@ -42,7 +44,7 @@ Register C: 0
 Program: 0,1,5,4,3,0
 """,
 // 5
-    """
+"""
 Register A: 0
 Register B: 29
 Register C: 0
@@ -50,7 +52,7 @@ Register C: 0
 Program: 1,7
 """,
 // 6
-    """
+"""
 Register A: 0
 Register B: 2024
 Register C: 43690
@@ -58,7 +60,7 @@ Register C: 43690
 Program: 4,0
 """,
 // 7
-    """
+"""
 Register A: 117440
 Register B: 0
 Register C: 0
@@ -120,7 +122,7 @@ fun main() {
 
     checkResult("'2,0,4,2,7,0,1,0,3'") { // [M3 562.584us]
         ThreeBitComputer(inputRegs, inputProgramm).run().joinToString(",",prefix="'",postfix="'")
-    }.let { (dt,result,check) -> println("[part 1] result: $result $check, dt: $dt (...)") }
+    }.let { (dt,result,check) -> println("[part 1] result: $result $check, dt: $dt (program output)") }
 
     // part 2: solutions: - / 265601188299675
 
@@ -154,5 +156,5 @@ fun main() {
 //            }
 //        }
         candidates.firstOrNull() ?: -1
-    }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (...)") }
+    }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (lowest positive initial value)") }
 }

@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/12
 
 package dev.codebasedlearning.adventofcode.day12
 
@@ -26,7 +28,7 @@ BBCC
 EEEC
 """,
 // 2: 772 / 436
-    """
+"""
 OOOOO
 OXOXO
 OOOOO
@@ -34,7 +36,7 @@ OXOXO
 OOOOO
 """,
 // 3: 1930 / 1206
-    """
+"""
 RRRRIICCFF
 RRRRIICCCF
 VVRRRCCFFF
@@ -47,7 +49,7 @@ MIIISIJEEE
 MMMISSJEEE 
 """,
 // 4: 692 / 236
-    """
+"""
 EEEEE
 EXXXX
 EEEEE
@@ -55,7 +57,7 @@ EXXXX
 EEEEE
 """,
 // 5: 1184 / 368
-    """
+"""
 AAAAAA
 AAABBA
 AAABBA
@@ -80,21 +82,21 @@ fun main() {
 
     // some data structures
     data class Side(var status: FieldStatus, var side: Int = 0)
-    data class Square1(val pos: Position, val c: Char,
-                       val sides: Map<Direction, Side>
+    data class Square(val pos: Position, val c: Char,
+                      val sides: Map<Direction, Side>
                        = Direction.Cardinals.associateWith { dir -> Side(FieldStatus.Out) },
-                       val corners: MutableMap<Direction, Boolean>
+                      val corners: MutableMap<Direction, Boolean>
                        = Direction.InterCardinals.associateWith { dir -> false }.toMutableMap(),
     )
-    data class Region1(var sides: Int = 0, val squares: MutableSet<Square1> = mutableSetOf()) {}
+    data class Region(var sides: Int = 0, val squares: MutableSet<Square> = mutableSetOf()) {}
 
-    fun Map<Direction, Side>.withPosition1(position: Position)  = this.map { (dir,side) -> Triple(position+dir,dir,side) }
-    fun Map<Direction, Side>.onlySame1()  = this.filter { it.value.status == FieldStatus.Same }
-    fun Map<Direction, Side>.onlyNotSame1()  = this.filter { it.value.status != FieldStatus.Same }
-    fun Map<Direction, Side>.isSame1(dir: Direction)  = (this[dir]!!.status == FieldStatus.Same)
-    fun Map<Direction, Side>.isNotSame1(dir: Direction)  = !this.isSame1(dir)
-    fun Map<Direction, Side>.ifNotSameCopyFrom1(dir: Direction, sideSquare:Square1) {
-        if (this.isNotSame1(dir)) this[dir]!!.side = sideSquare.sides[dir]!!.side
+    fun Map<Direction, Side>.withPosition(position: Position)  = this.map { (dir,side) -> Triple(position+dir,dir,side) }
+    fun Map<Direction, Side>.onlySame()  = this.filter { it.value.status == FieldStatus.Same }
+    fun Map<Direction, Side>.onlyNotSame()  = this.filter { it.value.status != FieldStatus.Same }
+    fun Map<Direction, Side>.isSame(dir: Direction)  = (this[dir]!!.status == FieldStatus.Same)
+    fun Map<Direction, Side>.isNotSame(dir: Direction)  = !this.isSame(dir)
+    fun Map<Direction, Side>.ifNotSameCopyFrom(dir: Direction, sideSquare:Square) {
+        if (this.isNotSame(dir)) this[dir]!!.side = sideSquare.sides[dir]!!.side
     }
 
     fun <R> Lines.toGridWithPosition(block: (Position,Char) -> R) = Grid<R>().apply {
@@ -103,7 +105,7 @@ fun main() {
         }
     }
 
-    val garden1 = story.lines.toGridWithPosition { pos, c -> Square1(pos, c) }.apply {
+    val garden = story.lines.toGridWithPosition { pos, c -> Square(pos, c) }.apply {
         forEachWithPosition { pos, square ->
             square.sides.forEach { (dir, side) ->
                 if (this.isValid(pos+dir))
@@ -113,8 +115,8 @@ fun main() {
         forEachWithPosition { pos, square ->
             square.corners.keys.forEach { dir ->
                 square.corners[dir] = dir.split().let { (d1, d2) ->
-                    (square.sides.isNotSame1(d1) && square.sides.isNotSame1(d2))
-                            || (square.sides.isSame1(d1) && square.sides.isSame1(d2)
+                    (square.sides.isNotSame(d1) && square.sides.isNotSame(d2))
+                            || (square.sides.isSame(d1) && square.sides.isSame(d2)
                             && this.isValid(pos + dir) && this[pos + dir].c != square.c)
                 }
             }
@@ -123,25 +125,25 @@ fun main() {
 
     // part 1: solution: - / 1421958
 
-    val regions1 = mutableListOf<Region1>()
+    val regions = mutableListOf<Region>()
     checkResult(1421958) { // [M3 27.074791ms]
-        val floodPositions1 = garden1.positions.toMutableSet()
+        val floodPositions = garden.positions.toMutableSet()
 
-        fun collect1(start: Position?=null, startRegion: Region1?=null) {
-            val from = (start ?: floodPositions1.first()).apply { floodPositions1.remove(this) }
-            val square = garden1[from]
-            val region = (startRegion ?: Region1().also { r -> regions1.add(r) }).apply { squares.add(square) }
-            square.sides.onlySame1().withPosition1(from).forEach { (sidePos,_,_) ->
-                if (sidePos in floodPositions1) { collect1(sidePos, region)}
+        fun collect(start: Position?=null, startRegion: Region?=null) {
+            val from = (start ?: floodPositions.first()).apply { floodPositions.remove(this) }
+            val square = garden[from]
+            val region = (startRegion ?: Region().also { r -> regions.add(r) }).apply { squares.add(square) }
+            square.sides.onlySame().withPosition(from).forEach { (sidePos,_,_) ->
+                if (sidePos in floodPositions) { collect(sidePos, region)}
             }
         }
 
-        while (floodPositions1.isNotEmpty()) {
-            collect1()
+        while (floodPositions.isNotEmpty()) {
+            collect()
         }
 
-        regions1.sumOf { region ->
-            region.squares.run { size * sumOf { it.sides.onlyNotSame1().count() } }
+        regions.sumOf { region ->
+            region.squares.run { size * sumOf { it.sides.onlyNotSame().count() } }
         }
     }.let { (dt,result,check) -> println("[part 1] result: $result $check, dt: $dt (garden fences)") }
 
@@ -171,30 +173,30 @@ fun main() {
     // see also V2 afterward
 
     checkResult(885394) { // [M3 9.355584ms]
-        regions1.sumOf { region ->
+        regions.sumOf { region ->
             var nextSideId = 0
             val sameSides = mutableSetOf<Pair<Int,Int>>()
             region.squares.forEach { square ->
-                for (dir in square.sides.onlyNotSame1().keys) {
+                for (dir in square.sides.onlyNotSame().keys) {
 
                     fun checkAndCopy(sideDir: Direction) {
                         val id = square.sides[dir]!!.side
-                        if (square.sides.isNotSame1(sideDir)) {
+                        if (square.sides.isNotSame(sideDir)) {
                             if (id == 0) square.sides[dir]!!.side = ++nextSideId
                             return
                         }
 
-                        val sideSquare = garden1[square.pos + sideDir]
+                        val sideSquare = garden[square.pos + sideDir]
                         val sideId = sideSquare.sides[dir]!!.side
 
                         if (sideId > 0) {
                             if (id > 0) {
                                 if (sideId != id) sameSides.add(Pair(min(id,sideId), max(id,sideId)))
                             } else
-                                square.sides.ifNotSameCopyFrom1(dir,sideSquare)
+                                square.sides.ifNotSameCopyFrom(dir,sideSquare)
                         } else {
                             if (id == 0) square.sides[dir]!!.side = ++nextSideId
-                            sideSquare.sides.ifNotSameCopyFrom1(dir,square)
+                            sideSquare.sides.ifNotSameCopyFrom(dir,square)
                         }
                     }
 
@@ -212,12 +214,12 @@ fun main() {
             region.squares.size * (region.sides )
         }
 
-    }.let { (dt,result,check) -> println("[part 2-V1] result: $result $check, dt: $dt (garden sides)") }
+    }.let { (dt,result,check) -> println("[part 2 v1] result: $result $check, dt: $dt (garden sides)") }
 
     checkResult(885394) { // [M3 9.355584ms]
-        regions1.sumOf { region ->
+        regions.sumOf { region ->
             val sides = region.squares.sumOf { sq -> sq.corners.count { it.value } }
             region.squares.size * ( sides ) // region.sides
         }
-    }.let { (dt,result,check) -> println("[part 2-V2] result: $result $check, dt: $dt (garden sides)") }
+    }.let { (dt,result,check) -> println("[part 2 v2] result: $result $check, dt: $dt (garden sides)") }
 }

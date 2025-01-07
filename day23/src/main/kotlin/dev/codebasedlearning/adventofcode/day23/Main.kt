@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/23
 
 package dev.codebasedlearning.adventofcode.day23
 
@@ -104,5 +106,4 @@ fun main() {
         findLargestClique(mutableSetOf(),network.keys.toMutableSet(),mutableSetOf())
             .sorted()
     }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (largest clique)") }
-
 }

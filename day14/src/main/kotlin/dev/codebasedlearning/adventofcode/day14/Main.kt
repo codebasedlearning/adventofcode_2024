@@ -1,4 +1,6 @@
 // (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+//
+// see https://adventofcode.com/2024/day/14
 
 package dev.codebasedlearning.adventofcode.day14
 
@@ -122,5 +124,4 @@ fun main() {
         }
         -1
     }.let { (dt,result,check) -> println("[part 2] result: $result $check, dt: $dt (christmas tree)") }
-
 }
