@@ -4,7 +4,6 @@
 
 package dev.codebasedlearning.adventofcode.day21
 
-import dev.codebasedlearning.adventofcode.commons.geometry.Direction
 import dev.codebasedlearning.adventofcode.commons.graph.findAllShortestPaths
 import dev.codebasedlearning.adventofcode.commons.graph.toGraph
 import dev.codebasedlearning.adventofcode.commons.grid.toGrid
@@ -12,7 +11,7 @@ import dev.codebasedlearning.adventofcode.commons.input.linesOf
 import dev.codebasedlearning.adventofcode.commons.timing.checkResult
 import dev.codebasedlearning.adventofcode.commons.visualization.print
 import dev.codebasedlearning.adventofcode.commons.geometry.minus
-import dev.codebasedlearning.adventofcode.commons.grid.mapKeysToDir
+import dev.codebasedlearning.adventofcode.commons.grid.mapDirToKeys
 
 val examples = listOf(
 // 1: ..
@@ -55,7 +54,7 @@ fun main() {
         val paths = chars.associateWith { c1 ->
             chars.associateWith { c2 ->
                 graph.findAllShortestPaths(pos[c1]!!, pos[c2]!!).map { list ->
-                    list.zipWithNext { a, b -> mapKeysToDir[(b - a).asDir]!! }.joinToString("")
+                    list.zipWithNext { a, b -> mapDirToKeys[(b - a).asDir]!! }.joinToString("")
                 }
             }
         }
@@ -74,7 +73,7 @@ fun main() {
         val paths = chars.associateWith { c1 ->
             chars.associateWith { c2 ->
                 graph.findAllShortestPaths(pos[c1]!!, pos[c2]!!).map { list ->
-                    list.zipWithNext { a, b -> mapKeysToDir[(b - a).asDir]!! }.joinToString("")
+                    list.zipWithNext { a, b -> mapDirToKeys[(b - a).asDir]!! }.joinToString("")
                 }
             }
         }

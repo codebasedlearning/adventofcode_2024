@@ -6,17 +6,15 @@ package dev.codebasedlearning.adventofcode.day06
 
 import dev.codebasedlearning.adventofcode.commons.geometry.Direction
 import dev.codebasedlearning.adventofcode.commons.geometry.Position
-import dev.codebasedlearning.adventofcode.commons.geometry.visit
+import dev.codebasedlearning.adventofcode.commons.geometry.glide
 import dev.codebasedlearning.adventofcode.commons.grid.Grid
-import dev.codebasedlearning.adventofcode.commons.grid.mapDirToKeys
-import dev.codebasedlearning.adventofcode.commons.grid.takeWhileInGrid
-import dev.codebasedlearning.adventofcode.commons.grid.temporarilyReplace
 import dev.codebasedlearning.adventofcode.commons.grid.toGrid
 import dev.codebasedlearning.adventofcode.commons.input.linesOf
 import dev.codebasedlearning.adventofcode.commons.timing.checkResult
 import dev.codebasedlearning.adventofcode.commons.visualization.print
 import dev.codebasedlearning.adventofcode.commons.geometry.times
 import dev.codebasedlearning.adventofcode.commons.geometry.plus
+import dev.codebasedlearning.adventofcode.commons.grid.mapKeysToDir
 
 val examples = listOf(
 """        
@@ -47,7 +45,7 @@ fun main() {
     }
 
     val theLab = story.lines.toGrid()
-    val (guard,facing) = theLab.positions.first { pos -> theLab[pos] !in ".#" }.let { it to mapDirToKeys[theLab[it]]!! }
+    val (guard,facing) = theLab.positions.first { pos -> theLab[pos] !in ".#" }.let { it to mapKeysToDir[theLab[it]]!! }
 
     // remember the way but also check for spaces been before, but only in the same direction, so crossing is allowed
     fun MutableMap<Position,Direction>.fillAndCheckWay(positions: Iterable<Position>, dir:Direction): Boolean {
@@ -58,6 +56,16 @@ fun main() {
         return false
     }
 
+    fun <T,R> Grid<T>.temporarilyReplace(pos: Position, value: T, block: Grid<T>.() -> R): R {
+        val original = this[pos]
+        this[pos] = value
+        return try {
+            block()
+        } finally {
+            this[pos] = original
+        }
+    }
+
     // patrol the lab (all these seek and check feels a little quirky...)
     fun Grid<Char>.patrol(): Pair<MutableMap<Position,Direction>, Boolean> {
         val visited = mutableMapOf<Position,Direction>(guard to facing)
@@ -66,8 +74,7 @@ fun main() {
         var direction = facing
         var stuck = false
         while (true) {
-            //var way1 = this.linePositions(start = current, direction = direction, skipStart = true).toList()
-            var way = current.visit(direction).drop(1).takeWhileInGrid(this).toList()
+            var way = current.glide(direction).drop(1).takeWhile { it in this }.toList()
             var (spaces, blocked) = way.indexOfFirst { pos -> this[pos]=='#' }
                 .let { index -> if (index>=0) Pair(index,true) else Pair(way.size,false)}
             stuck = visited.fillAndCheckWay(way.take(spaces), direction)

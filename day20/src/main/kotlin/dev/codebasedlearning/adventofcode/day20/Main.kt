@@ -4,8 +4,8 @@
 
 package dev.codebasedlearning.adventofcode.day20
 
+import dev.codebasedlearning.adventofcode.commons.geometry.Direction
 import dev.codebasedlearning.adventofcode.commons.geometry.norm1
-import dev.codebasedlearning.adventofcode.commons.geometry.toDirectionSquare
 import dev.codebasedlearning.adventofcode.commons.geometry.walk
 import dev.codebasedlearning.adventofcode.commons.graph.findShortestPaths
 import dev.codebasedlearning.adventofcode.commons.graph.minimalSteps
@@ -57,6 +57,14 @@ fun main() {
     val startPaths = graph.findShortestPaths(startPos)  // reachable from start
     val endPaths = graph.findShortestPaths(endPos)      // end reachable from here
     val fairDist = graph.minimalSteps(startPos,endPos)  // Benchmark if played fair
+
+    fun Int.toDirectionSquare() = sequence {
+        for (dr in -this@toDirectionSquare..this@toDirectionSquare) {
+            for (dc in -this@toDirectionSquare..this@toDirectionSquare) {
+                yield(Direction(dr, dc))
+            }
+        }
+    }
 
     fun cheats(cutOff: Int, worthIt: Int): Int {
         val total = mutableMapOf<Int,Int>()

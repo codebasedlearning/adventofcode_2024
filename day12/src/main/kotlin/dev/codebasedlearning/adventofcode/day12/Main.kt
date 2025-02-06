@@ -12,7 +12,6 @@ import dev.codebasedlearning.adventofcode.commons.timing.checkResult
 import dev.codebasedlearning.adventofcode.commons.visualization.print
 import dev.codebasedlearning.adventofcode.commons.geometry.plus
 import dev.codebasedlearning.adventofcode.commons.grid.Grid
-import dev.codebasedlearning.adventofcode.commons.grid.forEachWithPosition
 
 import kotlin.math.max
 import kotlin.math.min
@@ -103,6 +102,10 @@ fun main() {
         this@toGridWithPosition.forEachIndexed { row, line ->
             add(line.mapIndexed { col, c -> block(Position(row,col),c) }.toMutableList())
         }
+    }
+
+    fun <T> Grid<T>.forEachWithPosition(block: (Position, T) -> Unit) {
+        positions.forEach { pos -> block(pos, this[pos]) }
     }
 
     val garden = story.lines.toGridWithPosition { pos, c -> Square(pos, c) }.apply {

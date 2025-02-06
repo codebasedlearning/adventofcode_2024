@@ -5,8 +5,7 @@
 package dev.codebasedlearning.adventofcode.day04
 
 import dev.codebasedlearning.adventofcode.commons.geometry.Direction
-import dev.codebasedlearning.adventofcode.commons.geometry.visit
-import dev.codebasedlearning.adventofcode.commons.geometry.walk
+import dev.codebasedlearning.adventofcode.commons.geometry.glide
 import dev.codebasedlearning.adventofcode.commons.grid.slice
 import dev.codebasedlearning.adventofcode.commons.grid.toGrid
 import dev.codebasedlearning.adventofcode.commons.input.linesOf
@@ -50,7 +49,8 @@ fun main() {
 
     checkResult(2406) { // [M3 28.228709ms]
         grid.positions.sumOf { pos ->
-            Direction.AllCardinals.count { dir -> pos.walk(dir).toGrid(grid).take(xmasSize).contentEquals(xmas) }
+            //Direction.AllCardinals.count { dir -> pos.walk(dir).toGrid(grid).take(xmasSize).contentEquals(xmas) }
+            Direction.AllCardinals.count { dir -> pos.glide(dir).take(xmasSize).takeWhile { it in grid }.map { grid[it] }.contentEquals(xmas) }
         }
     }.let { (dt,result,check) -> println("[part 1] result: $result $check, dt: $dt (word search)") }
 
@@ -65,10 +65,10 @@ fun main() {
             // from pos consider only diagonal lines matching MAS in all variations
             if (grid[pos] != midElement) 0
             else {
-                val uldr = (pos.visit(Direction.UpLeft).slice(1..extent).toGrid(grid) +
-                        pos.visit(Direction.DownRight).slice(1..extent).toGrid(grid)).toList()
-                val dlur = (pos.visit(Direction.DownLeft).slice(1..extent).toGrid(grid) +
-                        pos.visit(Direction.UpRight).slice(1..extent).toGrid(grid)).toList()
+                val uldr = (pos.glide(Direction.UpLeft).slice(1..extent).takeWhile { it in grid }.map { grid[it] } +
+                        pos.glide(Direction.DownRight).slice(1..extent).takeWhile { it in grid }.map { grid[it] }).toList()
+                val dlur = (pos.glide(Direction.DownLeft).slice(1..extent).takeWhile { it in grid }.map { grid[it] } +
+                        pos.glide(Direction.UpRight).slice(1..extent).takeWhile { it in grid }.map { grid[it] }).toList()
                 if ( (uldr==mas || uldr==sam) && (dlur==mas || dlur==sam) ) 1 else 0.toInt()
             }
         }

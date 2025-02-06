@@ -7,14 +7,13 @@ package dev.codebasedlearning.adventofcode.day15
 import dev.codebasedlearning.adventofcode.commons.geometry.Direction
 import dev.codebasedlearning.adventofcode.commons.geometry.Position
 import dev.codebasedlearning.adventofcode.commons.grid.Grid
-import dev.codebasedlearning.adventofcode.commons.grid.copy
-import dev.codebasedlearning.adventofcode.commons.grid.mapDirToKeys
 import dev.codebasedlearning.adventofcode.commons.grid.toGrid
 import dev.codebasedlearning.adventofcode.commons.input.linesOf
 import dev.codebasedlearning.adventofcode.commons.input.toBlocks
 import dev.codebasedlearning.adventofcode.commons.timing.checkResult
 import dev.codebasedlearning.adventofcode.commons.visualization.print
 import dev.codebasedlearning.adventofcode.commons.geometry.plus
+import dev.codebasedlearning.adventofcode.commons.grid.mapKeysToDir
 
 val examples = listOf(
 // 1: ..
@@ -83,6 +82,14 @@ fun main() {
     // warehouseLoaded.print(indent = 2, description = "loaded warehouse:", separator = "")
     // println("moves: $moves\n")
 
+    fun <T> Grid<T>.copy():Grid<T> {
+        val f = Grid<T>()
+        for (l in data) {
+            f.data.add(l.toMutableList())
+        }
+        return f
+    }
+
     fun sumGpsPositions(isExtended: Boolean): Long {
         val warehouseStart = if (!isExtended) warehouseLoaded.copy() else Grid<Char>().apply {
             val repl = mapOf('#' to "##", '.' to "..", 'O' to "[]", '@' to "@.")
@@ -150,7 +157,7 @@ fun main() {
             }
 
         moves.forEach { move ->
-            val dir = mapDirToKeys[move]!!
+            val dir = mapKeysToDir[move]!!
             val c = ware[pos + dir]
             when (c) {
                 '#' -> {}
